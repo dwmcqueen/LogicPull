@@ -104,6 +104,7 @@
               <tr>
                 <th>Filename</th>
                 <th>Description</th>
+                <th>Input (Type)</th>
                 <th>Output (Type)</th>
                 <th>Options</th>
               </tr>
@@ -134,6 +135,7 @@
                     <a href="/manager/download/deliverable/stylesheet/<%= i %>/<%= interview.id %>/<%= interview.deliverables[i].id %>" data-toggle="tooltip" title="" data-original-title="Last Modified: <%= interview.deliverables[i].input.modified.toLocaleDateString() %> <%= interview.deliverables[i].input.modified.toLocaleTimeString() %> (<%= interview.deliverables[i].input.creator.name %>)" target="_blank"><i class="fa <%= deliverable_type %>"></i> <%= interview.deliverables[i].input.name %></a>
                   </td>
                   <td><%= interview.deliverables[i].description %></td>
+                  <td><%= interview.deliverables[i].input.type %></td>
                   <td>
                     <div><%= interview.deliverables[i].output.name %> <strong>(<%= interview.deliverables[i].output.type.toUpperCase() %>)</strong>
                           <% if (interview.deliverables[i].output.type.toUpperCase() === 'PDF_FORM') { %>
@@ -253,10 +255,10 @@
                       <% } %>
 
                     </td>
-                    <td><%= saved[j].name || '' %></td>
-                    <td><%= saved[j].note %></td>
-                    <td><%= saved[j].data.state.distance[saved[j].qid] %></td>
-                    <td><%= saved[j].created %></td>
+                    <td><%= saved[j]._doc.name || '' %></td>
+                    <td><%= saved[j]._doc.note %></td>
+                    <td></td>
+                    <td><%= saved[j]._doc.last_modified %></td>
                     <td>
                       <div class="btn-group pull-right">
                         <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

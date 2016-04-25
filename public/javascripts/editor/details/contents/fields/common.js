@@ -570,7 +570,7 @@ Editor.details.contents.fields.common = (function () {
               break;
             case 'min_length':
               output.push('<div class="field-validation">');
-              output.push('<div class="b-label">Minimun length: </div>');
+              output.push('<div class="b-label">Minimum length: </div>');
 
               if (validation[p] !== null) {
                 output.push('<input type="text" value="' + validation[p].replace(/"/g, '&quot;') + '" class="field-textbox ac" data-field-textbox-id="min_length" data-field-index="' + index + '"/>');

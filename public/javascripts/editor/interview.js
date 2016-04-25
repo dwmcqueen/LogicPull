@@ -69,6 +69,7 @@ Editor.interview = (function () {
   // show the notification that the interview is saving and then save it
   var saveInterview = function () {
     var socket = Editor.socket.getSocket();
+    console.log("Here");
     var interview = {
       id: Editor.settings.getID(), 
       data: questions,

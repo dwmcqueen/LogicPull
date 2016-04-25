@@ -74,7 +74,7 @@ module.exports = function (app) {
               id: require('crypto').createHash('md5').update(req.files.file.name + interview.id + interview.deliverables.length).digest("hex"),
               input : {
                 // the type refers to what is being produced
-                type: (req.body.output === 'pdf_form') ? 'fdf' : 'fo',
+                type: (req.body.output === 'pdf_form') ? 'fdf' : req.body.inputtype,
                 name: req.files.file.name,
                 path: "uploads/deliverables/" + interview.name + "-" + interview.id + "/" + req.files.file.name,
                 creator: {

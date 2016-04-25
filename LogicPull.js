@@ -9,12 +9,14 @@
   copy of the GNU Affero General Public License along with this program. If not, see
   <http://www.gnu.org/licenses/>.
 */
+/*jshint curly:true, debug:true */
 
 var express = require('express'),
   app = module.exports = express(),
   MongoStore = require('connect-mongo')(express),
   server = require('http').createServer(app),
   fs = require('fs'),
+  methodOverride = require('method-override'),
   socket = require('./lib/sockets'),
   flash = require('./middleware/flash'),
   version = require('./package.json').version,
@@ -22,24 +24,29 @@ var express = require('express'),
 
 
 // Set the development variables
-app.configure('development', function () {
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+//app.configure('development', function() {
+if ( app.get('env') === 'development' ) {
+  app.use(express.errorHandler({
+    dumpExceptions: true,
+    showStack: true
+  }));
 
   // Add in all the config settings
-  for(var setting in config.development) {
+  for (var setting in config.development) {
     app.set(setting, config.development[setting]);
   }
-});
-
+};
+//});
 // Set the production variables
-app.configure('production', function () {
-  app.use(express.errorHandler()); 
+//app.configure('production', function() {
+if ( app.get('env') === 'production' ) {
+  app.use(express.errorHandler());
 
-  for(var setting in config.production) {
+  for (var setting in config.production) {
     app.set(setting, config.production[setting]);
   }
-});
-
+};
+//});
 // set up the sessions to use the mongo database
 var sessionStore = new MongoStore({
   url: 'mongodb://' + app.get('mongo_host') + ':' + app.get('mongo_port') + '/' + app.get('mongo_db'),
@@ -47,7 +54,7 @@ var sessionStore = new MongoStore({
 });
 
 // these settings are common to both environments
-app.configure(function () {
+//app.configure(function() {
   app.use(express.favicon(__dirname + '/public/favicon.ico'));
   app.engine('.html', require('ejs').__express);
   app.set('views', __dirname + '/views/site');
@@ -58,22 +65,25 @@ app.configure(function () {
 
   app.use(express.cookieParser());
   app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  
+  //app.use(express.methodOverride());
+  app.use(methodOverride('X-HTTP-Method'));          // Microsoft
+  app.use(methodOverride('X-HTTP-Method-Override')); // Google/GData, default option
+  app.use(methodOverride('X-Method-Override'));      // IBM
+
   // this attaches the session to the req object
   app.use(express.session({
     store: sessionStore,
     // change this
     secret: app.get('session_secret'),
-    cookie: {  
-      path: app.get('cookie_path'),  
-      httpOnly: app.get('cookie_http_only'),  
+    cookie: {
+      path: app.get('cookie_path'),
+      httpOnly: app.get('cookie_http_only'),
       maxAge: app.get('cookie_max_age'),
       secure: app.get('cookie_secure'),
       domain: app.get('base_vhost')
     }
   }));
-  
+
   app.use(express.csrf());
 
   // generate a token for the form...the form input must be created
@@ -87,7 +97,7 @@ app.configure(function () {
   app.use(app.router);
   app.use(express.vhost(app.get('base_vhost'), require('./subdomains/LogicPull')));
 
-});
+//});
 
 // run the server with websockets
 server.listen(app.get('server_port'));

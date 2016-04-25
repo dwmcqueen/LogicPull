@@ -15,17 +15,17 @@ exports.development = {
 	// GENERAL
 
 		// The port that nodeJS will listen on. This will be used in your Varnish and nginx configuration.
-		server_port: "3000",
+		server_port: 3000,
 
 		// The home folder for the application. Must have a trailing slash!
-		base_location: "/home/zieba/Projects/LP/",
+		base_location: "/home/ubuntu/workspace/",
 
 		// The URL that will be used by the application.
-		base_url: "http://logicpull.local:3000",
+		base_url: "http://lp-template-change-dwmcqueen.c9users.io",
 
 		// If using virtual hosts, set a default/base. This used as the cookie domain to 
 		// allow the user to stay logged in over multiple subdomains.
-		base_vhost: "logicpull.local",
+		base_vhost: "lp-template-change-dwmcqueen.c9users.io",
 
 		// The server mongodb is on. If ;127.0.0.1' does not work, try 'localhost'.
 		mongo_host: "127.0.0.1",
@@ -144,17 +144,17 @@ exports.production = {
 	// GENERAL
 
 		// The port that nodeJS will listen on. This will be used in your Varnish and nginx configuration.
-		server_port: "3000",
+		server_port: process.env.PORT,
 
 		// The home folder for the application. Must have a trailing slash!
-		base_location: "/srv/www/LogicPull/",
+		base_location: "/home/ubuntu/workspace/",
 
 		// The URL that will be used by the application.
-		base_url: "http://www.yoursite.com",
+		base_url: "https://lp-template-change-dwmcqueen.c9users.io",
 
 		// If using virtual hosts, set a default/base. This used as the cookie domain to 
 		// allow the user to stay logged in over multiple subdomains.
-		base_vhost: "yoursite.com",
+		base_vhost: "lp-template-change-dwmcqueen.c9users.io",
 
 		// The server mongodb is on. If ;127.0.0.1' does not work, try 'localhost'.
 		mongo_host: "127.0.0.1",
@@ -166,7 +166,7 @@ exports.production = {
 		mongo_port: "27017",
 
 		// The folder location of the Apache FOP binary. Make sure there is a trailing slash!
-		fop_location: "/opt/fop-1.1/",
+		fop_location: "/opt/fop-2.1/",
 
 	// EMAIL 
 
@@ -216,12 +216,12 @@ exports.production = {
 
 
 	// GRAPHVIZ
-
+ 
 		// Graphviz is used in the editor to tidy the graph, 
-		disable_graphviz_tidy: false,
+		disable_graphviz_tidy: true,
 
 		// Display a fraction of the progress through the interview (i.e 1 of 219)
-		disable_graphviz_progress: false,
+		disable_graphviz_progress: true,
 
 	// SOCKET
 
